@@ -13,11 +13,15 @@ scan_string:
     push ebp
     mov ebp, esp
 
-    ; TODO:
-    ; 1. syscall read
-    ; 2. guardar en buffer
-    ; 3. agregar terminador 0
+ ; EAX = dirección destino , EBX = tamaño máximo
+    mov ecx, eax        
+    mov edx, ebx        
+    mov eax, 3          ; sys_read
+    mov ebx, 0          ; stdin
+    int 0x80            ; Llamada al sistema
 
+    ; EAX retorna el número de bytes leídos
+    mov byte [ecx + eax - 1], 0
     mov esp, ebp
     pop ebp
     ret
