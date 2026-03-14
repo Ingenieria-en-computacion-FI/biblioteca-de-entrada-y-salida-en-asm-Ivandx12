@@ -11,14 +11,15 @@ print_char:
 
     push ebp
     mov ebp, esp
+    push eax            ; Guardamos el carácter (AL) en la pila
+    
+    mov eax, 4          ; sys_write
+    mov ebx, 1          ; stdout
+    mov ecx, esp        ; La dirección del carácter es el tope de la pila
+    mov edx, 1          ; 1 byte
+    int 0x80            ; Llamada al sistema
 
-    ; TODO:
-    ; 1. Guardar el caracter en memoria
-    ; 2. Usar syscall write
-    ; 3. Imprimir 1 byte
-
-    ; write(fd=1, buffer, 1)
-
+    add esp, 4          
     mov esp, ebp
     pop ebp
     ret
